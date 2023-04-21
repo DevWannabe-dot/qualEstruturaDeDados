@@ -2,33 +2,28 @@
 #ifndef __FILA_h__
 #define __FILA_h__
 
-#define N_FILA 100
+#define N_FILA 1000 // (1 <= n <= 1000)
 
-struct fila{
+typedef struct fila{
 	int n;
 	int ini;
-	float vet[N_FILA];
-};
+	int vet[N_FILA];
+} Fila;
 
 typedef struct lista_f{
 	int info;
 	struct lista_f *prox;
 } Lista_f;
 
-struct filal{
+typedef struct filal{
 	Lista_f *ini;
 	Lista_f *fim;
-};
-
-
-
-typedef struct fila Fila;
-typedef struct filal FilaL;
+} FilaL;
 
 
 Fila *fila_cria_vet();
-void fila_insere_vet(Fila *f, float v);
-float fila_retira_vet(Fila *f);
+int fila_insere_vet(Fila *f, int v);
+int fila_retira_vet(Fila *f);
 int fila_vazia_vet(Fila *f);
 void fila_libera_vet(Fila *f);
 

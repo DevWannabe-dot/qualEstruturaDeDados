@@ -16,26 +16,35 @@ Fila *fila_cria_vet(){
 	return f;
 }
 
-void fila_insere_vet(Fila *f, float v){
+int fila_insere_vet(Fila *f, int v){
 	int fim;
+
 	if(f->n == N_FILA){
 		printf("Capacidade da fila estourou\n");
 		exit(1);
 	}
-	fim = (f->ini + f->n)%N_FILA;
+	fim = (f->ini + f->n) % N_FILA;	
 	f->vet[fim] = v;
 	f->n++;
+	return f->vet[fim];
 }
 
-float fila_retira_vet(Fila *f){
-	float v;
+int fila_retira_vet(Fila *f){
+	int v, fim, prioridade_max = 0;
+
 	if(fila_vazia_vet(f)){
 		printf("Fila vazia!\n");
 		exit(1);
 	}
-	v=f->vet[f->ini];
-	f->ini = (f->ini + 1) % N_FILA;
-	f->n--;
+	fim = (f->ini + f->n) % N_FILA;
+	for (int i = 0; i < fim; i++) {
+		if (f->vet[i] > f->vet[prioridade_max]) prioridade_max = i;
+	}
+	v = f->vet[prioridade_max];
+	f->vet[prioridade_max] = 0; /* 
+	não realiza a remoção apropriada, porém faz com que o maior elemento 
+	encontrado seja 0, o que impede que seja removido novamente */
+	
 	return v;
 }
 
@@ -151,7 +160,7 @@ Lista_f* fila_busca_l(FilaL *fila, int informacao){
 
 void fila_imprime_vet(Fila *f){
 	int i;
-	for(i=0;i<f->n; i++) printf("%f \n", f->vet[(f->ini+i)%N_FILA]);
+	for(i=0;i<f->n; i++) printf("%d \n", f->vet[(f->ini+i)%N_FILA]);
 }
 
 void fila_imprime_l(FilaL *f){
