@@ -72,7 +72,7 @@ int main(int argc, char ** argv) {
 	do {
 		scanf("%d", &n);
 		x = (int*) realloc(x, sizeof(int) * n);
-		cmd = (int*)realloc(cmd, sizeof(int) * n);
+		cmd = (int*)realloc(cmd, sizeof(int) * n); // (resolução #1)
 			
 		for (i = 0; i < n; i++) {
 			scanf("%d %d", &cmd[i], &x[i]);
