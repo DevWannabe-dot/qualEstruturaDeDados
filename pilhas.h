@@ -10,7 +10,7 @@ typedef struct pilha_vet {
 } Pilha_vet;
 
 typedef struct lista_p{
-	char info;
+	int info;
 	struct lista_p *prox;
 } Lista_p;
 
@@ -26,8 +26,8 @@ void pilha_vet_libera(Pilha_vet *p);
 void pilha_vet_imprime(Pilha_vet *p);
 
 Pilha_lst *pilha_lst_cria();
-void pilha_lst_push(Pilha_lst *p, char v);
-char pilha_lst_pop(Pilha_lst *p);
+int pilha_lst_push(Pilha_lst *p, int v);
+int pilha_lst_pop(Pilha_lst *p);
 int pilha_lst_vazia(Pilha_lst *p);
 void pilha_lst_libera(Pilha_lst *p);
 void pilha_lst_imprime(Pilha_lst *p);

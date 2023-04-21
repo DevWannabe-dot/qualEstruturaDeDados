@@ -51,16 +51,17 @@ Pilha_lst *pilha_lst_cria(){
 	return p;
 }
 
-void pilha_lst_push(Pilha_lst *p, char v){
+int pilha_lst_push(Pilha_lst *p, int v){
 	Lista_p *l=(Lista_p *)malloc(sizeof(Lista_p));
 	l->info=v;
 	l->prox=p->prim;
 	p->prim=l;
+	return l->info;
 }
 
-char pilha_lst_pop(Pilha_lst *p){
+int pilha_lst_pop(Pilha_lst *p){
 	Lista_p *l;
-	char c;
+	int c;
 	if(pilha_lst_vazia(p)){
 		printf("Pilha vazia\n");
 		exit(1);
