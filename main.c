@@ -8,6 +8,7 @@
 // Inclusões
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include "util.h"
 #include "fila.h"
 #include "pilhas.h"
@@ -28,11 +29,14 @@
 
 // Funções
 int qual_estrutura(int * cmd, int * x, int n) {
-	int CODIGO = 1, i;
+	int CODIGO = 0, i;
 	FilaL* f = fila_cria_l();
 	Pilha_lst* p = pilha_lst_cria();
+	Fila* pr = fila_cria_vet();
 
 	// verifica se é fila
+	CODIGO += 1;
+
 	for (i = 0; i < n; i++) {
 		if (cmd[i] == 1) {
 			if (fila_insere_l(f, x[i]) == x[i]) {
@@ -66,9 +70,31 @@ int qual_estrutura(int * cmd, int * x, int n) {
 		}
 	}
 	
+	// verifica se é fila de prioridade
+	CODIGO += 3;
+
+	for (i = 0; i < n; i++) {
+		if (cmd[i] == 1) {
+			if (fila_insere_vet(pr, x[i]) == x[i]) {
+				continue;
+			}
+			else CODIGO -= 3; break;
+		}
+		else if (cmd[i] == 2) {
+			if (fila_retira_vet(pr) == x[i]) {
+				continue;
+			}
+			else CODIGO -= 3; break;
+		}
+	}
+
+
+	// Libera a memoria
 	fila_libera_l(f);
 	pilha_lst_libera(p);
+	fila_libera_vet(pr);
 
+	// Decide o protocolo de return
 	switch (CODIGO) {
 		case 0:
 			break;
