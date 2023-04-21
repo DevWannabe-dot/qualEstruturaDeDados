@@ -11,7 +11,7 @@ struct fila{
 };
 
 typedef struct lista_f{
-	char info[20];
+	int info;
 	struct lista_f *prox;
 } Lista_f;
 
@@ -33,12 +33,12 @@ int fila_vazia_vet(Fila *f);
 void fila_libera_vet(Fila *f);
 
 FilaL *fila_cria_l();
-char *fila_insere_l(FilaL *f, char v[20]);
-char* fila_retira_l(FilaL* f);
-char *fila_retira_l_pesquisa(FilaL *f, char query[]);
+int fila_insere_l(FilaL *f, int v);
+int fila_retira_l(FilaL* f);
+int fila_retira_l_pesquisa(FilaL *f, int query);
 int fila_vazia_l(FilaL *f);
 void fila_libera_l(FilaL *f);
 void fila_imprime_l(FilaL *f);
-Lista_f* fila_busca_l(FilaL *fila, char informacao[]);
+Lista_f* fila_busca_l(FilaL *fila, int informacao);
 
 #endif

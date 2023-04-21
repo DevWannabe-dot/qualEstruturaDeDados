@@ -55,10 +55,9 @@ FilaL *fila_cria_l(){
 	return f;
 }
 
-char* fila_insere_l(FilaL *f,char *v){
+int fila_insere_l(FilaL *f,int v){
 	Lista_f *n = (Lista_f *) malloc(sizeof(Lista_f));
-	int i;
-	for(i=0;i<20;i++) n->info[i]=v[i];
+	n->info=v;
 	n->prox = NULL;
 	if(f->fim != NULL) f->fim->prox = n;
 	else f->ini = n;
@@ -66,9 +65,9 @@ char* fila_insere_l(FilaL *f,char *v){
 	return v;
 }
 
-char *fila_retira_l(FilaL *f){
+int fila_retira_l(FilaL *f){
 	Lista_f *t;
-	char *v;
+	int v;
 	if(fila_vazia_l(f)){
 		printf("Fila vazia!");
 		exit(1);
@@ -81,9 +80,9 @@ char *fila_retira_l(FilaL *f){
 	return v;
 }
 
-char* fila_retira_l_pesquisa(FilaL* f, char query[]) {
+int fila_retira_l_pesquisa(FilaL* f, int query) {
 	Lista_f* t, * u;
-	char* v;
+	int v;
 	int n = 0, i = 0;
 
 	if (fila_vazia_l(f)) {
@@ -93,7 +92,7 @@ char* fila_retira_l_pesquisa(FilaL* f, char query[]) {
 	t = f->ini;
 	v = t->info;
 	do {
-		if (strcmp(query, v)) {
+		if (query != v) {
 			u = t->prox;
 			v = u->info;
 			n++;
@@ -138,10 +137,10 @@ void fila_libera_l(FilaL *f){
 	free(f);
 }
 
-Lista_f* fila_busca_l(FilaL *fila, char informacao[]){
+Lista_f* fila_busca_l(FilaL *fila, int informacao){
 	Lista_f *q;
 	for(q=fila->ini; q!=NULL; q=q->prox){
-		if(strcmp(informacao, q->info)==0){
+		if(informacao == q->info){
 			return q;
 		}
 	}
@@ -157,5 +156,5 @@ void fila_imprime_vet(Fila *f){
 
 void fila_imprime_l(FilaL *f){
 	Lista_f *q;
-	for(q=f->ini; q!= NULL; q=q->prox) printf("\t%s\n",q->info);
+	for(q=f->ini; q!= NULL; q=q->prox) printf("\t%d\n",q->info);
 }
