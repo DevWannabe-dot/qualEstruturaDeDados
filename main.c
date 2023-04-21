@@ -30,22 +30,45 @@
 int qual_estrutura(int * cmd, int * x, int n) {
 	int CODIGO = 1, i;
 	FilaL* f = fila_cria_l();
+	Pilha_lst* p = pilha_lst_cria();
 
+	// verifica se é fila
 	for (i = 0; i < n; i++) {
 		if (cmd[i] == 1) {
 			if (fila_insere_l(f, x[i]) == x[i]) {
 				continue;
 			}
-			else CODIGO = 0;  break; // se o valor retornado nao for igual ao valor entrado, impossivel ser esta estrutura
+			else CODIGO -= 1;  break; // se o valor retornado nao for igual ao valor entrado, impossivel ser esta estrutura
 		}
 		else if (cmd[i] == 2) {
 			if (fila_retira_l(f) == x[i]) { // caso o valor retornado for igual ao valor de x da entrada correspondente
 				continue;
 			}
-			else CODIGO = 0;  break;
+			else CODIGO -= 1;  break;
+		}
+	}
+
+	// verifica se é pilha
+	CODIGO += 2;
+
+	for (i = 0; i < n; i++) {
+		if (cmd[i] == 1) {
+			if (pilha_lst_push(p, x[i]) == x[i]) {
+				continue;
+			}
+			else CODIGO -= 2; break;
+		}
+		else if (cmd[i] == 2) {
+			if (pilha_lst_pop(p) == x[i]) {
+				continue;
+			}
+			else CODIGO -= 2; break;
 		}
 	}
 	
+	fila_libera_l(f);
+	pilha_lst_libera(p);
+
 	switch (CODIGO) {
 		case 0:
 			break;
