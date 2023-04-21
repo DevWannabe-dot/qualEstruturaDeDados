@@ -27,26 +27,56 @@
 // Tipos
 
 // Funções
-int qual_estrutura(int cmd, int * x, int n) {
-	int i;
+int qual_estrutura(int * cmd, int * x, int n) {
+	int CODIGO = 1, i;
+	FilaL* f = fila_cria_l();
 
 	for (i = 0; i < n; i++) {
-
+		if (cmd[i] == 1) {
+			if (fila_insere_l(f, x[i]) == x[i]) {
+				continue;
+			}
+			else CODIGO = 0;  break; // se o valor retornado nao for igual ao valor entrado, impossivel ser esta estrutura
+		}
+		else if (cmd[i] == 2) {
+			if (fila_retira_l(f) == x[i]) { // caso o valor retornado for igual ao valor de x da entrada correspondente
+				continue;
+			}
+			else CODIGO = 0;  break;
+		}
 	}
 	
+	switch (CODIGO) {
+		case 0:
+			break;
+		case 1:
+			return QUEUE;
+			break;
+		case 2:
+			return STACK;
+			break;
+		case 3:
+			return PRIORITY_QUEUE;
+			break;
+		default:
+			return NOT_SURE;
+			break;
+	}
+
 	return IMPOSSIBLE;
 }
 
 int main(int argc, char ** argv) {
-	int i = 0, n = 0, cmd = 0, * x = NULL;
+	int i = 0, n = 0, * cmd = NULL, * x = NULL;
 
 	do {
 		scanf("%d", &n);
 		x = (int*) realloc(x, sizeof(int) * n);
-
+		cmd = (int*)realloc(cmd, sizeof(int) * n);
+			
 		for (i = 0; i < n; i++) {
-			scanf("%d %d", &cmd, &x[i]);
-			printf("<%d %d>\n", cmd, x[i]);
+			scanf("%d %d", &cmd[i], &x[i]);
+			// printf("<%d %d>\n", cmd, x[i]);	// verificar leitura apropriada
 		}
 
 		switch (qual_estrutura(cmd, x, n)) {
