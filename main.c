@@ -116,16 +116,52 @@ int qual_estrutura(int * cmd, int * x, int n) {
 }
 
 int main(int argc, char ** argv) {
-	int i = 0, n = 0, * cmd = NULL, * x = NULL;
+	int i = 0, n = 0, * cmd = NULL, * x = NULL, leitura;
+	char lixo;
+	FILE* arq;
+	long cursor = 0;
 
+	printf("Leitura por stdin ou arquivo?\n"
+			"1 - stdin\n"
+			"2 - arquivo\n");
+	scanf("%d%c", &leitura, &lixo);
+
+	
 	do {
-		scanf("%d", &n);
-		x = (int*) realloc(x, sizeof(int) * n);
-		cmd = (int*)realloc(cmd, sizeof(int) * n); // (resolução #1)
-			
-		for (i = 0; i < n; i++) {
-			scanf("%d %d", &cmd[i], &x[i]);
-			// printf("<%d %d>\n", cmd, x[i]);	// verificar leitura apropriada
+		if (leitura == 1) {
+			scanf("%d", &n);
+
+			x = (int*)realloc(x, sizeof(int) * n);
+			cmd = (int*)realloc(cmd, sizeof(int) * n); // (resolução #1)
+
+			for (i = 0; i < n; i++) {
+				scanf("%d %d", &cmd[i], &x[i]);
+				// printf("<%d %d>\n", cmd, x[i]);	// verificar leitura apropriada
+			}
+		}
+		else if (leitura == 2) {
+			arq = fopen("teste.txt", "r");
+			fseek(arq, cursor, SEEK_SET);
+
+			if (arq) {
+				if (!feof(arq)) {
+					if (fscanf(arq, "%d", &n) == EOF) return SUCESSO;
+					printf("%d\n", n);
+
+					x = (int*)realloc(x, sizeof(int) * n);
+					cmd = (int*)realloc(cmd, sizeof(int) * n);
+
+					for (i = 0; i < n; i++) {
+						fscanf(arq, "%d %d", &cmd[i], &x[i]);
+						printf("%d %d\n", cmd[i], x[i]);
+						// printf("<%d %d>\n", cmd, x[i]);	// verificar leitura apropriada
+					}
+					cursor = ftell(arq);
+				}
+			}
+			else {
+				fprintf(stderr, "<Impossivel acessar o arquivo de entrada.>\n"); break;
+			}
 		}
 
 		switch (qual_estrutura(cmd, x, n)) {
